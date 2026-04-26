@@ -8,7 +8,7 @@ public class Spawner : MonoBehaviour
 
     public float tempodeSpawn = 5f; // Tempo entre cada spawn de inimigo
     private float tempoAtual; // Tempo atual desde o último spawn
-    private float multiplicadorDificuldade = 0.90f; // Multiplicador para aumentar a dificuldade ao longo do tempo
+    private float multiplicadorDificuldade = 0.95f; // Multiplicador para aumentar a dificuldade ao longo do tempo
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -26,7 +26,7 @@ public class Spawner : MonoBehaviour
 
 
         // Aumenta a dificuldade diminuindo o tempo para o próximo nascer
-        if (tempoAtual > 0.3f) // Limite mínimo de 0.3 segundos para não travar o PC
+        if (tempoAtual > 0.15f) // 
         {
             tempoAtual *= multiplicadorDificuldade; 
         }

@@ -113,8 +113,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.5091181, y: 1.806243, z: 0.3317318}
-  m_Center: {x: 0.23254061, y: 0.9855957, z: -0.5343027}
+  m_Size: {x: 1.176898, y: 1.8620431, z: 0.3317318}
+  m_Center: {x: 0.21631002, y: 1.0134958, z: -0.5343027}
 --- !u!114 &6305444390638948013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,6 +127,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f1bb206efcab434c98de265c48aa2f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  prefabCaixaVida: {fileID: 1071041469211261127, guid: db09d52c8e40a0145bb5229fed398bb1, type: 3}
+  chanceDeDrop: 0.258
 --- !u!195 &-3752522469665680223
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -137,7 +139,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
+  m_Speed: 3
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

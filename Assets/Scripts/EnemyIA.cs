@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 
 public class Enemy : MonoBehaviour
 {
+    public GameObject prefabCaixaVida; 
+    [Range(0f, 1f)] public float chanceDeDrop = 0.2f; 
 
     private Transform player; // Referência ao transform do jogador
     private NavMeshAgent agent; // Referência ao componente NavMeshAgent do inimigo
@@ -30,16 +32,37 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            // Reinicia a cena atual
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            VidaPlayer vidaDoJogador = collision.gameObject.GetComponent<VidaPlayer>();
+            
+            if (vidaDoJogador != null)
+            {
+                vidaDoJogador.TomarDano(25); // O zumbi tira 25 pontos de vida por hit
+            }
         }
         
         // Morte do Inimigo (Regra: se a bala encostar, inimigo some)
         if (collision.gameObject.CompareTag("Bala"))
         {
-            Destroy(collision.gameObject); // Destrói a bala
-            Destroy(gameObject); // Destrói o inimigo
+            // destrói a bala
+            Destroy(collision.gameObject);
+            // mata o inimigo
+            Morrer();
         }
+    }
+
+    public void Morrer()
+    {
+        // Ganha pontos 10 ao eliminar um inimigo
+        FindAnyObjectByType<GerenciadorPontos>().GanharPontos(10);
+
+        // Chance de drop de caixa de vida
+        if (Random.value <= chanceDeDrop && prefabCaixaVida != null)
+        {
+            Instantiate(prefabCaixaVida, transform.position + Vector3.up * 0.5f, Quaternion.identity);
+        }
+
+        
+        Destroy(gameObject);
     }
 
 }

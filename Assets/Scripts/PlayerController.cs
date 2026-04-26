@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
     public GameObject prefabBala;
     public float velocidadeBala = 20f;
     public Transform pontoDeTiro; // Ponto de onde a bala será instanciada
+    public float cooldownTiro = 0.05f; // Tempo de recarga entre os tiros
+    private float timerTiro = 0f; // Timer para controlar o cooldown do tiro
 
     void Start()
     {
@@ -33,6 +35,14 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        // Se o jogo estiver pausado, não processa os controles (o jogo tava gerando as balas e movendo o personagem mesmo com o jogo pausado)
+        if (Time.timeScale == 0f) return;
+
+        //timer do tiro
+        if (timerTiro > 0)        {
+            timerTiro -= Time.deltaTime;
+        }
+
         // Controle de camera com o mouse
         float mouseX = Input.GetAxis("Mouse X") * sensibilidadeMouse;
         float mouseY = Input.GetAxis("Mouse Y") * sensibilidadeMouse;
@@ -69,10 +79,11 @@ public class PlayerController : MonoBehaviour
 
 
 
-        // executa o tiro quando o botão esquerdo do mouse for pressionado
-        if (Input.GetMouseButtonDown(0))
+        // executa o tiro quando o botão esquerdo do mouse for pressionad;
+        
+        if (Input.GetMouseButtonDown(0) && timerTiro <= 0f)
         {
-            Atirar();
+            Atirar();     
         }
     }
 
@@ -80,9 +91,13 @@ public class PlayerController : MonoBehaviour
     {
         if(pontoDeTiro != null)
         {
+            Transform cameraTransform = Camera.main.transform;
+            
             GameObject novaBala = Instantiate(prefabBala, pontoDeTiro.position, cameraJogador.rotation);
-            novaBala.GetComponent<Rigidbody>().linearVelocity = cameraJogador.forward * velocidadeBala;
-            Destroy(novaBala, 2f);
+            novaBala.GetComponent<Rigidbody>().linearVelocity = cameraTransform.forward * velocidadeBala;
+            Destroy(novaBala, 1f);
+
+            timerTiro = cooldownTiro;
         }
     }
 
